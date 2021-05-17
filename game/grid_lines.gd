@@ -5,6 +5,9 @@ var cols = 6
 var rows = 6
 var grid_color = Color.gray
 
+func _ready() -> void:
+	self_modulate = Color(1.0, 1.0, 1.0, 0.3)
+
 func _draw() -> void:
 	for c in cols + 1:
 		draw_line(Vector2(0.0, c * cell_size), Vector2(rows * cell_size, c * cell_size), grid_color)
