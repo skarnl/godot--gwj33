@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://game/grid_lines.gd" type="Script" id=1]
+[ext_resource path="res://game/game.gd" type="Script" id=2]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="DungeonGrid" type="Node2D" parent="."]
+
+[node name="GridLines" type="Node2D" parent="DungeonGrid"]
+position = Vector2( 32, 32 )
+script = ExtResource( 1 )

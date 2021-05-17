@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://screens/splash.gd" type="Script" id=1]
+
+[node name="Splash" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 501.0
+margin_top = 274.0
+margin_right = 541.0
+margin_bottom = 288.0
+text = "splash"
+__meta__ = {
+"_edit_use_anchors_": false
+}
