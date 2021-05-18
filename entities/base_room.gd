@@ -27,8 +27,6 @@ func _make_random_doors() -> void:
 		doors.append(options.pop_front())
 	
 	doors.append(options.pop_front())
-	
-	print(doors)
 
 func _draw() -> void:
 	draw_rect(Rect2(0.0, 0.0, 16.0, 16.0), Color.whitesmoke, false)

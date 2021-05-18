@@ -6,11 +6,13 @@ var rows = 6
 var grid_color = Color.gray
 
 func _ready() -> void:
-	self_modulate = Color(1.0, 1.0, 1.0, 0.3)
+#	self_modulate = Color(1.0, 1.0, 1.0, 0.3)
+	pass
+
 
 func _draw() -> void:
-	for c in cols + 1:
-		draw_line(Vector2(0.0, c * cell_size), Vector2(rows * cell_size, c * cell_size), grid_color)
-		
-	for r in rows + 1:
-		draw_line(Vector2(r * cell_size, 0.0), Vector2(r * cell_size, cols * cell_size), grid_color)
+	var points = []
+	
+	for c in cols:
+		for r in rows:
+			draw_primitive([Vector2(c * cell_size, r * cell_size)], [grid_color], [])

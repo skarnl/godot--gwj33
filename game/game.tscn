@@ -1,26 +1,23 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://game/grid_lines.gd" type="Script" id=1]
 [ext_resource path="res://game/game.gd" type="Script" id=2]
-[ext_resource path="res://entities/room.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/dungeon_grid.gd" type="Script" id=3]
+[ext_resource path="res://entities/supply.tscn" type="PackedScene" id=4]
+[ext_resource path="res://entities/supply.gd" type="Script" id=5]
+[ext_resource path="res://entities/start_room.tscn" type="PackedScene" id=6]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="DungeonGrid" type="Node2D" parent="."]
+script = ExtResource( 3 )
 
-[node name="GridLines" type="Node2D" parent="DungeonGrid"]
+[node name="DropZones" type="Node2D" parent="DungeonGrid"]
 position = Vector2( 32, 32 )
-script = ExtResource( 1 )
 
-[node name="Room" parent="DungeonGrid" instance=ExtResource( 3 )]
+[node name="StartRoom" parent="DungeonGrid" instance=ExtResource( 6 )]
 position = Vector2( 64, 32 )
 
-[node name="Room2" parent="DungeonGrid" instance=ExtResource( 3 )]
-position = Vector2( 64, 64 )
-
-[node name="Room3" parent="DungeonGrid" instance=ExtResource( 3 )]
-position = Vector2( 112, 32 )
-
-[node name="Room4" parent="DungeonGrid" instance=ExtResource( 3 )]
-position = Vector2( 96, 48 )
+[node name="Supply" parent="." instance=ExtResource( 4 )]
+position = Vector2( 48, 144 )
+script = ExtResource( 5 )
