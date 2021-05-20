@@ -1,12 +1,12 @@
 extends Node2D
 
-
-var screen_size = Vector2.ZERO
-
+onready var supply = $Supply
+onready var grid = $DungeonGrid
 
 func _ready():
-	# prevent from catching all mouse interaction
-#	mouse_filter = MOUSE_FILTER_IGNORE
-	
-	screen_size = get_viewport().size
-	print("game")
+	supply.connect('selected', self, '_on_room_selected')
+	grid.connect('selected_used', supply, '_on_selected_used')
+
+
+func _on_room_selected(room_configuration) -> void:
+	grid.set_selected_room_configuration(room_configuration)

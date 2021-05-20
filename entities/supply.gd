@@ -7,9 +7,17 @@ signal selected(room_configuration)
 const ROOM_WIDTH = 16.0
 const SPACING = 10.0
 
+onready var rooms = $Rooms
 onready var highlight = $Highlight
+onready var selected_highlight = $SelectedHighlight
+
+var selected_index = -1
+
+var rooms_list = []
 
 func _ready() -> void:
+	rooms_list.resize(3)
+	
 	_spawn_room(0)
 	_spawn_room(1)
 	_spawn_room(2)
@@ -24,7 +32,9 @@ func _spawn_room(index: int) -> void:
 	sr.connect('mouse_over', self, '_on_room_mouse_over', [index])
 	sr.connect('mouse_out', self, '_on_room_mouse_out')
 	sr.connect('selected', self, '_on_room_selected', [index])
-	add_child(sr)
+	rooms.add_child(sr)
+	
+	rooms_list[index] = sr
 
 
 func _on_room_mouse_over(index: int) -> void:
@@ -37,4 +47,21 @@ func _on_room_mouse_out() -> void:
 	
 
 func _on_room_selected(index: int) -> void:
-	print('room selected: ', index)
+	selected_index = index
+	selected_highlight.position = _calc_position_by_index(selected_index)
+	selected_highlight.show()
+	
+	var supply_room = rooms_list[index]
+	var config = supply_room.get_configuration()
+	
+	emit_signal('selected', config)
+
+func _on_selected_used() -> void:
+	var used_room = rooms_list[selected_index]
+	used_room.queue_free()
+	
+	_spawn_room(selected_index)
+	
+	selected_index = -1
+	highlight.hide()
+	selected_highlight.hide()

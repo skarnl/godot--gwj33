@@ -7,3 +7,7 @@
 script = ExtResource( 2 )
 
 [node name="Highlight" parent="." instance=ExtResource( 1 )]
+
+[node name="SelectedHighlight" parent="." instance=ExtResource( 1 )]
+
+[node name="Rooms" type="Node2D" parent="."]

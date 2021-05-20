@@ -9,11 +9,11 @@
 script = ExtResource( 2 )
 
 [node name="DungeonGrid" type="Node2D" parent="."]
-position = Vector2( 32, 32 )
+position = Vector2( 48, 48 )
 script = ExtResource( 3 )
 
 [node name="Supply" parent="." instance=ExtResource( 4 )]
-position = Vector2( 48, 144 )
+position = Vector2( 64, 160 )
 
 [node name="Hero" parent="." instance=ExtResource( 1 )]
 position = Vector2( 36.5288, 25.7174 )
