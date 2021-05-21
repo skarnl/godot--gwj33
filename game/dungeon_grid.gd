@@ -8,6 +8,7 @@ export (int) var rows = 6
 var DropZoneInstance = preload('res://entities/grid/dropzone.tscn')
 var RoomInstance = preload('res://entities/rooms/room.tscn')
 var StartRoom = preload('res://entities/rooms/start_room.tscn')
+var EndRoom = preload('res://entities/rooms/end_room.tscn')
 var PreviewRoom = preload('res://entities/rooms/preview_room.tscn')
 
 var preview
@@ -20,7 +21,8 @@ var selected_room_config
 
 func _ready() -> void:
 	_fill_grid()
-	_add_start_room(1, 1)
+	_add_start_room(1, 1) #make position random?
+	_add_end_room(4, 4) #make position random?
 	_add_preview_room()
 
 func _fill_grid() -> void:
@@ -81,6 +83,16 @@ func _add_start_room(col, row):
 	
 	#TODO: disable the dropzone dots around the start-room
 
+func _add_end_room(col, row):
+	var sr = EndRoom.instance()
+	sr.position = Vector2(col * cell_size, row * cell_size)
+	add_child(sr)
+	
+	var start_zone = zones[col][row]
+	start_zone.disable()
+	
+	#TODO: disable the dropzone dots around the start-room
+
 
 func _add_room(room_config, col, row):
 	var r = RoomInstance.instance()
@@ -97,9 +109,4 @@ func set_selected_room_configuration(room_config):
 	
 	selected_room_config = room_config
 	
-	
-	
-	
-	
-	
-	
+
