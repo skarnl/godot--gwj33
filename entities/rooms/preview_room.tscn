@@ -4,5 +4,10 @@
 [ext_resource path="res://entities/rooms/preview_room.gd" type="Script" id=2]
 
 [node name="PreviewRoom" instance=ExtResource( 1 )]
-self_modulate = Color( 1, 1, 1, 0.439216 )
 script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+self_modulate = Color( 1, 1, 1, 0.470588 )
+
+[node name="Doors" parent="." index="2"]
+self_modulate = Color( 1, 1, 1, 0.470588 )
