@@ -9,6 +9,11 @@ func _ready() -> void:
 	$ClickArea.connect('mouse_entered', self, '_on_mouse_over')
 	$ClickArea.connect('mouse_exited', self, '_on_mouse_out')
 	$ClickArea.connect('input_event', self, '_on_mouse_event')
+	
+	set_configuration({
+		"doors": _make_random_doors(),
+		"type": EMPTY
+	})
 
 
 func _on_mouse_over() -> void:

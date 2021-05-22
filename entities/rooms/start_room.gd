@@ -1,5 +1,8 @@
 extends 'res://entities/rooms/base_room.gd'
 
 # Overwrite to enforce only the bottom door
-func _make_random_doors():
-	return [BOTTOM]
+func _ready() -> void:
+	set_configuration({
+		"doors": [DoorPositions.BOTTOM],
+		"type": EMPTY
+	})

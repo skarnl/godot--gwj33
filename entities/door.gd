@@ -1,6 +1,5 @@
 extends Node2D
 
-enum {TOP, RIGHT, BOTTOM, LEFT}
 enum {CLOSED, OPENED}
 
 export (Color) var color = Color.yellow
@@ -24,16 +23,16 @@ func _draw_closed():
 	var xpos = 5.0
 	
 	match(direction):
-		TOP: 
+		DoorPositions.TOP: 
 			draw_rect(Rect2(xpos, ypos, width, height), color)
 		
-		RIGHT:
+		DoorPositions.RIGHT:
 			draw_rect(Rect2(16.0 - ypos - height, xpos, height, width), color)
 			
-		BOTTOM:
+		DoorPositions.BOTTOM:
 			draw_rect(Rect2(xpos, 16.0 - ypos - height, width, height), color)
 
-		LEFT:
+		DoorPositions.LEFT:
 			draw_rect(Rect2(ypos, xpos, height, width), color)
 
 func _draw_opened():
@@ -44,16 +43,16 @@ func _draw_opened():
 	var xpos = 5.0
 	
 	match(direction):
-		TOP: 
+		DoorPositions.TOP: 
 			draw_rect(Rect2(xpos, ypos, width, height), color)
 		
-		RIGHT:
+		DoorPositions.RIGHT:
 			draw_rect(Rect2(16.0 - ypos - height, xpos, height, width), color)
 			
-		BOTTOM:
+		DoorPositions.BOTTOM:
 			draw_rect(Rect2(xpos, 16.0 - ypos - height, width, height), color)
 
-		LEFT:
+		DoorPositions.LEFT:
 			draw_rect(Rect2(ypos, xpos, height, width), color)
 
 func open() -> void:

@@ -1,6 +1,7 @@
 extends Node2D
 
 signal selected_used
+signal finished
 
 export (int) var columns = 6
 export (int) var rows = 6
@@ -15,9 +16,32 @@ var preview
 
 var cell_size = 16.0
 
+# dropzones
 var zones = []
 
+# rooms
+var rooms = {}
+
+
 var selected_room_config
+
+var start_room
+var end_room
+
+
+# we store what movement our hero last made, so we know how to check what directions we first check
+var last_movement_direction # RIGHT, DOWN, LEFT, UP
+
+# {TOP, RIGHT, BOTTOM, LEFT}
+enum MOVEMENT { UP, RIGHT, DOWN, LEFT }
+
+var directions = {
+	MOVEMENT.RIGHT: [DoorPositions.BOTTOM, DoorPositions.RIGHT, DoorPositions.TOP, DoorPositions.LEFT],
+	MOVEMENT.DOWN: [DoorPositions.LEFT, DoorPositions.BOTTOM, DoorPositions.RIGHT, DoorPositions.TOP],
+	MOVEMENT.LEFT: [DoorPositions.TOP, DoorPositions.LEFT, DoorPositions.BOTTOM, DoorPositions.RIGHT],
+	MOVEMENT.UP: [DoorPositions.RIGHT, DoorPositions.TOP, DoorPositions.LEFT, DoorPositions.BOTTOM],
+}
+
 
 func _ready() -> void:
 	_fill_grid()
@@ -44,12 +68,9 @@ func _add_preview_room():
 	preview = PreviewRoom.instance()
 	add_child(preview)
 	
-	print(preview.position)
 	preview.hide()
 
 func _on_mouse_entered(col, row) -> void:
-	print('mouse over dropzone: ', col, row)
-	
 	if selected_room_config:
 		preview.show()
 		preview.set_configuration(selected_room_config)
@@ -73,23 +94,33 @@ func _on_mouse_clicked(col, row) -> void:
 		
 		emit_signal('selected_used')
 
+
 func _add_start_room(col, row):
 	var sr = StartRoom.instance()
 	sr.position = Vector2(col * cell_size, row * cell_size)
 	add_child(sr)
 	
-	var start_zone = zones[col][row]
-	start_zone.disable()
+	start_room = sr
+	
+	var zone = zones[col][row]
+	zone.queue_free()
+	
+	_store_room_reference(col, row, sr)
 	
 	#TODO: disable the dropzone dots around the start-room
 
+
 func _add_end_room(col, row):
-	var sr = EndRoom.instance()
-	sr.position = Vector2(col * cell_size, row * cell_size)
-	add_child(sr)
+	var er = EndRoom.instance()
+	er.position = Vector2(col * cell_size, row * cell_size)
+	add_child(er)
 	
-	var start_zone = zones[col][row]
-	start_zone.disable()
+	end_room = er
+	
+	var zone = zones[col][row]
+	zone.queue_free()
+	
+	_store_room_reference(col, row, er)
 	
 	#TODO: disable the dropzone dots around the start-room
 
@@ -99,14 +130,145 @@ func _add_room(room_config, col, row):
 	r.position = Vector2(col * cell_size, row * cell_size)
 	add_child(r)
 	
-	r._create_doors(room_config)
+	r.set_configuration(room_config)
 
 	var zone = zones[col][row]
-	zone.disable()
+	zone.queue_free()
+	
+	_store_room_reference(col, row, r)
+	
+	print('add room at: ', col, row)
+	
+	_store_connecting_rooms(col, row)
+	
+	
+func _store_room_reference(col, row, room) -> void:
+	rooms[_create_cell_id(col, row)] = room
+	
+	
+func _create_cell_id(col, row) -> String:
+	return "%d,%d" % [col, row]
 
+func _get_room_for_cell(col, row):
+	var cell_id = _create_cell_id(col, row)
+	if rooms.has(cell_id):
+		return rooms[cell_id]
+	
+	return null
+
+# function to check for connecting rooms
+# and store a reference in this room AND the connecting rooms
+func _store_connecting_rooms(col, row):
+	var current_room = _get_room_for_cell(col, row)
+	
+	if not current_room:
+		return
+		
+	print("current_room doors: ", current_room.room_configuration.doors)
+	
+	# top
+	if row > 0:
+		var room = _get_room_for_cell(col, row - 1)
+		
+		if room and (current_room.has_door_at_position(DoorPositions.TOP) or room.has_door_at_position(DoorPositions.BOTTOM)):
+			current_room.add_connection(DoorPositions.TOP, room)
+			room.add_connection(DoorPositions.BOTTOM, current_room)
+	
+	# right
+	if col < columns:
+		var room = _get_room_for_cell(col + 1, row)
+		
+		if room and (current_room.has_door_at_position(DoorPositions.RIGHT) or room.has_door_at_position(DoorPositions.LEFT)):
+			current_room.add_connection(DoorPositions.RIGHT, room)
+			room.add_connection(DoorPositions.LEFT, current_room)
+	
+	# below
+	if row < rows:
+		var room = _get_room_for_cell(col, row + 1)
+		
+		if room and (current_room.has_door_at_position(DoorPositions.BOTTOM) or room.has_door_at_position(DoorPositions.TOP)):
+			current_room.add_connection(DoorPositions.BOTTOM, room)
+			room.add_connection(DoorPositions.TOP, current_room)
+		
+	# left
+	if col > 0:
+		var room = _get_room_for_cell(col - 1, row)
+		
+		if room and (current_room.has_door_at_position(DoorPositions.LEFT) or room.has_door_at_position(DoorPositions.RIGHT)):
+			current_room.add_connection(DoorPositions.LEFT, room)
+			room.add_connection(DoorPositions.RIGHT, current_room)
+
+	
 func set_selected_room_configuration(room_config):
 	print('set selected room')
 	
 	selected_room_config = room_config
 	
+	
+func get_next_destination(current_hero_position: Vector2) -> Vector2:
+	var current_hero_position_local = to_local(current_hero_position)
+	
+	if current_hero_position_local.distance_to(end_room.get_center_position()) < 0.1:
+		emit_signal('finished')
+	
+	if is_in_dungeon(current_hero_position_local):
+		print('we zitten IN de dungeon')
+		
+		var current_room = get_room_for_position(current_hero_position_local)
+		
+		print(current_room)
+		
+		var connecting_rooms = current_room.connections
+		
+		print(connecting_rooms)
+		
+		if connecting_rooms.size() > 0:
+			for door_position in directions[last_movement_direction]:
+				if connecting_rooms.has(door_position):
+					last_movement_direction = door_position
+					
+					var room = connecting_rooms[door_position]
+					return to_global(room.get_center_position())
+			
+		# check of we alle kamers gehad hebben die er zijn
+		# blijven we ronddwalen? wel makkelijker dan stoppen en route bepalen
+			
+		# pak alle deuren (richtingen)
+		# check (in vaste volgorde) of er achter die deur een kamer zit
+		# hou bij welke deuren je al gehad hebt als je terugkomt in dezelfde kamer
+		# reset deze lijst wanneer er een nieuwe kamer toegevoegd wordt - dan:
+			 # !!! na het toevoegen van een nieuwe kamer, check voor de korste route vanaf de hero naar die kamer
+			 # zodat hij niet alle kamers hoeft te doorlopen
+		
+		
+		
+		return current_hero_position
+	else:
+		print("walk towards the start")
+		
+		# walk towards start_room
+		var start_room_position = start_room.get_center_position()
+		
+		# walk horizontal
+		if current_hero_position_local.x != start_room_position.x:
+			last_movement_direction = MOVEMENT.RIGHT
+			return to_global(Vector2(start_room_position.x, current_hero_position_local.y))
+			
+		# walk vertical
+		else:
+			last_movement_direction = MOVEMENT.DOWN
+			return to_global(Vector2(current_hero_position_local.x, start_room_position.y))
 
+
+func is_in_dungeon(local_position: Vector2) -> bool:
+	return local_position.x > 0 \
+	   and local_position.y > 0 \
+	   and local_position.x < columns * cell_size \
+	   and local_position.y < rows * cell_size
+	
+
+func get_room_for_position(local_position: Vector2):
+	var col = int(local_position.x / cell_size)
+	var row = int(local_position.y / cell_size)
+	
+	return _get_room_for_cell(col, row)

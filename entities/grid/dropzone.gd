@@ -29,8 +29,6 @@ func hide_indicator() -> void:
 
 
 func disable() -> void:
-	print('disable')
-	
 	disabled = true
 	
 	$CollisionShape2D.disabled = true

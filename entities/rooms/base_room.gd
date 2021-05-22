@@ -8,24 +8,20 @@ enum { EMPTY, ENEMY, START, EXIT, TREASURE, KEY }
 
 var room_configuration = {
 	"doors": [],
-	"type": EMPTY,
+	"type": EMPTY	
 }
 
-var rng
-
-enum {TOP, RIGHT, BOTTOM, LEFT}
-
-var options = [TOP, RIGHT, BOTTOM, LEFT]
+var connections = {}
 
 func _ready() -> void:
 	randomize()
 	
-	room_configuration.doors = _make_random_doors()
-	_create_doors(room_configuration)
 
 func _make_random_doors() -> Array:
 	var doors = []
 	var random_float = randf()
+	
+	var options = [DoorPositions.TOP, DoorPositions.RIGHT, DoorPositions.BOTTOM, DoorPositions.LEFT]
 	options.shuffle()
 	
 	if random_float > 0.95:
@@ -39,23 +35,43 @@ func _make_random_doors() -> Array:
 	
 	doors.append(options.pop_front())
 	
-	print(doors)
-	
 	return doors
 
 
-func _create_doors(_room_configuration):
-	print(_room_configuration)
-	
+func _create_doors():
 	# remove old doors
 	for child in doors_layer.get_children():
 		child.queue_free()
 	
-	for dir in _room_configuration.doors:
+	for dir in room_configuration.doors:
 		var door = DoorInstance.instance()
 		door.direction = dir
 		doors_layer.add_child(door)
 
 
+func set_configuration(_room_configuration):
+	room_configuration = _room_configuration
+	_create_doors()
+
+
 func get_configuration():
 	return room_configuration
+
+
+func has_door_at_position(door_position) -> bool:
+	
+	print('has_door_at_position: ', door_position)
+	print('doors: ', room_configuration.doors)
+	print('has door: ', room_configuration.doors.has(door_position))
+	
+	return room_configuration.doors.has(door_position)
+
+func add_connection(door_position, room) -> void:
+	print('### add connection')
+	
+	connections[door_position] = room
+	
+	print(connections)
+
+func get_center_position() -> Vector2:
+	return position + Vector2(8.0, 8.0)

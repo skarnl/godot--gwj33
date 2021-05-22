@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Reference",
+"class": "DoorPositions",
+"language": "GDScript",
+"path": "res://entities/door_positions.gd"
+} ]
 _global_script_class_icons={
-
+"DoorPositions": ""
 }
 
 [application]

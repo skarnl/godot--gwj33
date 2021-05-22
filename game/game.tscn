@@ -16,4 +16,5 @@ script = ExtResource( 3 )
 position = Vector2( 64, 160 )
 
 [node name="Hero" parent="." instance=ExtResource( 1 )]
-position = Vector2( 36.5288, 25.7174 )
+position = Vector2( 72, 40 )
+speed = 700.0
