@@ -20,7 +20,10 @@ func _on_room_selected(room_configuration) -> void:
 func _on_hero_request_instructions() -> void:
 	print('hero requested instruction')
 	
-	hero.destination = grid.get_next_destination(hero.position)
+	var next_destination = grid.get_next_destination(hero.position)
+	
+	if next_destination:
+		hero.destination = next_destination
 	
 
 	# vertaal hero positie naar grid positie

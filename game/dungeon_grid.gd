@@ -205,11 +205,13 @@ func set_selected_room_configuration(room_config):
 	selected_room_config = room_config
 	
 	
-func get_next_destination(current_hero_position: Vector2) -> Vector2:
+func get_next_destination(current_hero_position: Vector2):
 	var current_hero_position_local = to_local(current_hero_position)
 	
 	if current_hero_position_local.distance_to(end_room.get_center_position()) < 0.1:
+		print("##### FINISHEDDDD!!!! ")
 		emit_signal('finished')
+		return
 	
 	if is_in_dungeon(current_hero_position_local):
 		print('we zitten IN de dungeon')
