@@ -24,16 +24,20 @@ func _make_random_doors() -> Array:
 	var options = [DoorPositions.TOP, DoorPositions.RIGHT, DoorPositions.BOTTOM, DoorPositions.LEFT]
 	options.shuffle()
 	
-	if random_float > 0.95:
-		doors.append(options.pop_front())
+	# add all
+	for dir in options:
+		doors.append(dir)
 	
-	if random_float > 0.9:
-		doors.append(options.pop_front())
+	# remove by chance
+	if random_float < 0.9:
+		doors.pop_back()
 	
-	if random_float > 0.8:
-		doors.append(options.pop_front())
+	if random_float < 0.7:
+		doors.pop_back()
+
+	if random_float < 0.3:
+		doors.pop_back()	
 	
-	doors.append(options.pop_front())
 	
 	return doors
 
