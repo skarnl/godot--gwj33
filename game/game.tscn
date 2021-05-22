@@ -17,4 +17,4 @@ position = Vector2( 64, 160 )
 
 [node name="Hero" parent="." instance=ExtResource( 1 )]
 position = Vector2( 72, 40 )
-speed = 700.0
+speed = 710.0
