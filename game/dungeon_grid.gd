@@ -36,10 +36,10 @@ var last_movement_direction # RIGHT, DOWN, LEFT, UP
 enum MOVEMENT { UP, RIGHT, DOWN, LEFT }
 
 var directions = {
-	MOVEMENT.RIGHT: [DoorPositions.BOTTOM, DoorPositions.RIGHT, DoorPositions.TOP, DoorPositions.LEFT],
-	MOVEMENT.DOWN: [DoorPositions.LEFT, DoorPositions.BOTTOM, DoorPositions.RIGHT, DoorPositions.TOP],
-	MOVEMENT.LEFT: [DoorPositions.TOP, DoorPositions.LEFT, DoorPositions.BOTTOM, DoorPositions.RIGHT],
-	MOVEMENT.UP: [DoorPositions.RIGHT, DoorPositions.TOP, DoorPositions.LEFT, DoorPositions.BOTTOM],
+	MOVEMENT.RIGHT: [DoorPositions.BOTTOM, DoorPositions.RIGHT, DoorPositions.TOP],
+	MOVEMENT.DOWN: [DoorPositions.LEFT, DoorPositions.BOTTOM, DoorPositions.RIGHT],
+	MOVEMENT.LEFT: [DoorPositions.TOP, DoorPositions.LEFT, DoorPositions.BOTTOM],
+	MOVEMENT.UP: [DoorPositions.RIGHT, DoorPositions.TOP, DoorPositions.LEFT],
 }
 
 
@@ -216,16 +216,19 @@ func get_next_destination(current_hero_position: Vector2):
 	if is_in_dungeon(current_hero_position_local):
 		print('we zitten IN de dungeon')
 		
-		var current_room = get_room_for_position(current_hero_position_local)
-		
-		print(current_room)
-		
+		var current_room = get_room_for_position(current_hero_position_local)		
 		var connecting_rooms = current_room.connections
 		
-		print(connecting_rooms)
-		
 		if connecting_rooms.size() > 0:
-			for door_position in directions[last_movement_direction]:
+			
+			if connecting_rooms.size() == 1:
+				var room = connecting_rooms.values().front()
+				return to_global(room.get_center_position())
+			
+			var door_options = directions[last_movement_direction].duplicate()
+			door_options.shuffle()
+			
+			for door_position in door_options:
 				if connecting_rooms.has(door_position):
 					last_movement_direction = door_position
 					
