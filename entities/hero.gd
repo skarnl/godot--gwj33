@@ -24,7 +24,7 @@ func _on_tick() -> void:
 func _move() -> bool:
 	var distance = position.distance_to(destination)
 	
-	if distance > 0.1:
+	if distance > 1:
 		if position.x == destination.x:
 			if position.y > destination.y:
 				position.y -= STEP_SIZE
