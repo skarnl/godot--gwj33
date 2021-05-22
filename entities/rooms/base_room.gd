@@ -92,4 +92,4 @@ func _open_door(door_position):
 	
 
 func get_center_position() -> Vector2:
-	return position + Vector2(8.0, 8.0)
+	return position + Vector2(8.0, 6.0)

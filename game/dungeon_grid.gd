@@ -228,24 +228,14 @@ func get_next_destination(current_hero_position: Vector2):
 			var door_options = directions[last_movement_direction].duplicate()
 			door_options.shuffle()
 			
+			# TODO prioritize unvisited rooms?
+			
 			for door_position in door_options:
 				if connecting_rooms.has(door_position):
 					last_movement_direction = door_position
 					
 					var room = connecting_rooms[door_position]
-					return to_global(room.get_center_position())
-			
-		# check of we alle kamers gehad hebben die er zijn
-		# blijven we ronddwalen? wel makkelijker dan stoppen en route bepalen
-			
-		# pak alle deuren (richtingen)
-		# check (in vaste volgorde) of er achter die deur een kamer zit
-		# hou bij welke deuren je al gehad hebt als je terugkomt in dezelfde kamer
-		# reset deze lijst wanneer er een nieuwe kamer toegevoegd wordt - dan:
-			 # !!! na het toevoegen van een nieuwe kamer, check voor de korste route vanaf de hero naar die kamer
-			 # zodat hij niet alle kamers hoeft te doorlopen
-		
-		
+					return to_global(room.get_center_position())		
 		
 		return current_hero_position
 	else:
