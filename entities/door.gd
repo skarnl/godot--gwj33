@@ -44,16 +44,16 @@ func _draw_opened():
 	
 	match(direction):
 		DoorPositions.TOP: 
-			draw_rect(Rect2(xpos, ypos, width, height), color)
+			draw_rect(Rect2(xpos, ypos, width, height), closed_color)
 		
 		DoorPositions.RIGHT:
-			draw_rect(Rect2(16.0 - ypos - height, xpos, height, width), color)
+			draw_rect(Rect2(16.0 - ypos - height, xpos, height, width), closed_color)
 			
 		DoorPositions.BOTTOM:
-			draw_rect(Rect2(xpos, 16.0 - ypos - height, width, height), color)
+			draw_rect(Rect2(xpos, 16.0 - ypos - height, width, height), closed_color)
 
 		DoorPositions.LEFT:
-			draw_rect(Rect2(ypos, xpos, height, width), color)
+			draw_rect(Rect2(ypos, xpos, height, width), closed_color)
 
 func open() -> void:
 	state = OPENED
