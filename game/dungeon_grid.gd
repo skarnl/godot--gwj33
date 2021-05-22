@@ -2,6 +2,10 @@ extends Node2D
 
 signal selected_used
 signal finished
+signal defeat_enemy
+signal heal
+signal pickup_treasure
+signal pickup_big_treasure
 
 export (int) var columns = 6
 export (int) var rows = 6
@@ -216,7 +220,22 @@ func get_next_destination(current_hero_position: Vector2):
 	if is_in_dungeon(current_hero_position_local):
 		print('we zitten IN de dungeon')
 		
-		var current_room = get_room_for_position(current_hero_position_local)		
+		var current_room = get_room_for_position(current_hero_position_local)	
+		current_room.hide_visualization()
+		
+		match current_room.get_configuration().type:
+			RoomTypes.ENEMY:
+				emit_signal('defeat_enemy')
+			
+			RoomTypes.TREASURE:
+				emit_signal('pickup_treasure')
+				
+			RoomTypes.BIG_TREASURE:
+				emit_signal('pickup_big_treasure')
+				
+			RoomTypes.HEAL:
+				emit_signal('heal')
+			
 		var connecting_rooms = current_room.connections
 		
 		if connecting_rooms.size() > 0:

@@ -6,11 +6,19 @@ onready var hero = $Hero
 
 const STEP_SIZE = 16.0
 
+var score = 0
+var health = 3
+
 
 func _ready():
 	supply.connect('selected', self, '_on_room_selected')
-	grid.connect('selected_used', supply, '_on_selected_used')
 	hero.connect('ask', self, '_on_hero_request_instructions')
+	grid.connect('selected_used', supply, '_on_selected_used')
+	
+	grid.connect('defeat_enemy', self, '_on_defeat_enemy')
+	grid.connect('heal', self, '_on_heal')
+	grid.connect('pickup_treasure', self, '_on_pickup_treasure')
+	grid.connect('pickup_big_treasure', self, '_on_pickup_big_treasure')
 
 
 func _on_room_selected(room_configuration) -> void:
@@ -25,12 +33,24 @@ func _on_hero_request_instructions() -> void:
 	if next_destination:
 		hero.destination = next_destination
 	
-
-	# vertaal hero positie naar grid positie
-	# check dan bij de DungeonGrid welke deuren er zijn
-	# bepaald dan de volgende lokatie ( = links, rechts, boven, beneden = de richting + cell_size = volgende lokatie )
-	# animeer / tween dit
-	# na de tween, begin op nieuw
 	
-	# vragen:
-	# altijd eerst de linkerdeur, dan de benedendeur en dan de rechterdeur
+func _on_defeat_enemy():
+	score += 10
+	health -= 1
+	temp_update()
+	
+func _on_heal():
+	health += 1
+	temp_update()
+	
+func _on_pickup_treasure():
+	score += 3
+	temp_update()
+	
+func _on_pickup_big_treasure():
+	score += 7
+	temp_update()
+	
+func temp_update():
+	print('score  = ', score)
+	print('health =', health)
