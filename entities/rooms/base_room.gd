@@ -3,12 +3,11 @@ extends Node2D
 var DoorInstance = preload('res://entities/door.tscn')
 
 onready var doors_layer = $Doors
-
-enum { EMPTY, ENEMY, START, EXIT, TREASURE, KEY }
+onready var type_icon = $TypeIcon
 
 var room_configuration = {
 	"doors": [],
-	"type": EMPTY	
+	"type": RoomTypes.EMPTY	
 }
 
 var connections = {}
@@ -52,10 +51,36 @@ func _create_doors():
 		door.direction = dir
 		doors_layer.add_child(door)
 
+func _visualize_type():
+	match room_configuration.type:
+		RoomTypes.ENEMY:
+			type_icon.set_frame(6)
+			pass
+			
+		RoomTypes.TREASURE:
+			type_icon.set_frame(2)
+			pass
+
+		RoomTypes.BIG_TREASURE:
+			type_icon.set_frame(0)
+			pass
+			
+		RoomTypes.HEAL:
+			type_icon.set_frame(4)
+			pass
+			
+		_:
+			type_icon.hide()
+	
+
+func hide_visualization():
+	type_icon.hide()
+
 
 func set_configuration(_room_configuration):
 	room_configuration = _room_configuration
 	_create_doors()
+	_visualize_type()
 
 
 func get_configuration():

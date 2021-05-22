@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "DoorPositions",
 "language": "GDScript",
 "path": "res://entities/door_positions.gd"
+}, {
+"base": "Reference",
+"class": "RoomTypes",
+"language": "GDScript",
+"path": "res://entities/room_types.gd"
 } ]
 _global_script_class_icons={
-"DoorPositions": ""
+"DoorPositions": "",
+"RoomTypes": ""
 }
 
 [application]

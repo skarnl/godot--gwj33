@@ -4,5 +4,5 @@ extends 'res://entities/rooms/base_room.gd'
 func _ready() -> void:
 	set_configuration({
 		"doors": [DoorPositions.BOTTOM],
-		"type": EMPTY
+		"type": RoomTypes.START
 	})
