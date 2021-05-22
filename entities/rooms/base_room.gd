@@ -67,11 +67,25 @@ func has_door_at_position(door_position) -> bool:
 	return room_configuration.doors.has(door_position)
 
 func add_connection(door_position, room) -> void:
-	print('### add connection')
-	
 	connections[door_position] = room
 	
-	print(connections)
+	_open_door(door_position)
+
+
+func _open_door(door_position):
+	var found_door = false
+	
+	for door in doors_layer.get_children():
+		if door.direction == door_position:
+			found_door = true
+			door.open()
+
+	if not found_door:
+		var new_door = DoorInstance.instance()
+		new_door.direction = door_position
+		new_door.open()
+		doors_layer.add_child(new_door)
+	
 
 func get_center_position() -> Vector2:
 	return position + Vector2(8.0, 8.0)
