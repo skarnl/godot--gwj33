@@ -222,6 +222,8 @@ func get_next_destination(current_hero_position: Vector2):
 		if connecting_rooms.size() > 0:
 			
 			if connecting_rooms.size() == 1:
+				last_movement_direction = connecting_rooms.keys().front()
+				
 				var room = connecting_rooms.values().front()
 				return to_global(room.get_center_position())
 			
