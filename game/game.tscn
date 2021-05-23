@@ -123,9 +123,9 @@ position = Vector2( 40, 21.6025 )
 
 [node name="explanation" type="Label" parent="."]
 margin_left = 22.5949
-margin_top = 188.333
+margin_top = 171.898
 margin_right = 235.595
-margin_bottom = 227.333
+margin_bottom = 210.898
 rect_pivot_offset = Vector2( 171.42, -39.1185 )
 custom_fonts/font = SubResource( 1 )
 text = "Help the Hero through the dungeon
@@ -138,9 +138,9 @@ __meta__ = {
 
 [node name="restart" type="Label" parent="."]
 margin_left = 22.5949
-margin_top = 188.333
+margin_top = 230.632
 margin_right = 235.595
-margin_bottom = 227.333
+margin_bottom = 269.632
 rect_pivot_offset = Vector2( 171.42, -39.1185 )
 custom_fonts/font = SubResource( 1 )
 text = "(r)estart"
