@@ -111,8 +111,7 @@ func _input(event: InputEvent) -> void:
 		if player_died and get_tree().paused:
 			_restart()
 		elif player_victorious:
-			# continue to next level
-			pass
+			_restart()
 		
 	if event is InputEvent and event.is_action_pressed('reset'):
 		_restart()
