@@ -34,6 +34,7 @@ config/icon="res://assets/images/icon.png"
 
 SceneLoader="*res://global/scene_loader.gd"
 Game="*res://global/game.gd"
+RoomTypeGenerator="*res://global/room_type_generator.gd"
 
 [display]
 

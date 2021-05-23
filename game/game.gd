@@ -4,6 +4,7 @@ onready var supply = $Supply
 onready var grid = $DungeonGrid
 onready var hero = $Hero
 onready var grass_field = $GrassField
+onready var hud = $HUD
 
 const STEP_SIZE = 16.0
 
@@ -41,7 +42,8 @@ func _on_hero_request_instructions() -> void:
 	
 	
 func _on_defeat_enemy():
-	score += 10
+	hud.add_score(10)
+	
 	health -= 1
 	temp_update()
 	
@@ -50,11 +52,12 @@ func _on_heal():
 	temp_update()
 	
 func _on_pickup_treasure():
-	score += 3
+	hud.add_score(3)
 	temp_update()
 	
 func _on_pickup_big_treasure():
-	score += 7
+	hud.add_score(7)
+	
 	temp_update()
 	
 func temp_update():

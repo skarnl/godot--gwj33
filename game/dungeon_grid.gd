@@ -226,8 +226,6 @@ func get_next_destination(current_hero_position: Vector2):
 		return
 	
 	if is_in_dungeon(current_hero_position_local):
-		print('we zitten IN de dungeon')
-		
 		var current_room = get_room_for_position(current_hero_position_local)	
 		
 		if not current_room.is_visited:
