@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/fonts/Rokkitt-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://gui/hud.gd" type="Script" id=2]
@@ -13,13 +13,32 @@ size = 40
 font_data = SubResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 12
+size = 32
 outline_color = Color( 1, 0, 0, 1 )
+extra_spacing_bottom = -11
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 14
 font_data = ExtResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 2
+emission_box_extents = Vector3( 528, 1, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 15, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = 1.5
+radial_accel_random = 1.0
+damping = 7.0
+damping_random = 1.0
+angle = 42.7
+angle_random = 1.0
+scale = 7.0
+scale_random = 0.7
+color = Color( 0.827451, 0.0352941, 0.941176, 1 )
+hue_variation = 1.0
+hue_variation_random = 1.0
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -81,10 +100,17 @@ texture = ExtResource( 3 )
 hframes = 2
 
 [node name="YouDied" type="Panel" parent="."]
-visible = false
 self_modulate = Color( 1, 0, 0, 0.407843 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="YouDied"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.305882, 0.0196078, 0.0196078, 0.392157 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -94,16 +120,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -51.8653
-margin_top = -25.4327
-margin_right = 0.134735
-margin_bottom = -11.4327
-rect_scale = Vector2( 2, 2 )
+margin_left = -79.5
+margin_top = -46.9464
+margin_right = 79.5
+margin_bottom = -8.94635
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
-text = "YOU DIED"
-align = 1
-valign = 1
+text = "HERO DIED"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -113,12 +136,72 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -43.1487
-margin_top = 43.3792
-margin_right = 42.8513
-margin_bottom = 60.3792
+margin_left = -49.5
+margin_top = 45.2981
+margin_right = 49.5
+margin_bottom = 65.2981
 custom_fonts/font = SubResource( 4 )
 text = "click to restart"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YouWon" type="Panel" parent="."]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="YouWon"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.972549, 0.447059, 0.0235294, 0.392157 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WonExplosion" type="Particles2D" parent="YouWon"]
+position = Vector2( 119.515, -17.8381 )
+scale = Vector2( 0.5, 0.5 )
+amount = 1000
+lifetime = 10.0
+preprocess = 5.0
+process_material = SubResource( 5 )
+
+[node name="Label" type="Label" parent="YouWon"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -114.0
+margin_top = -58.5273
+margin_right = 114.0
+margin_bottom = 20.4727
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 0.94902, 0.0392157, 1 )
+text = "HERO REACHED
+THE EXIT"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="YouWon"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -57.0
+margin_top = 44.7035
+margin_right = 57.0
+margin_bottom = 64.7035
+custom_fonts/font = SubResource( 4 )
+text = "click to continue"
 align = 1
 valign = 1
 __meta__ = {

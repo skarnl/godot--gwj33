@@ -54,8 +54,8 @@ func _on_hero_request_instructions() -> void:
 	
 		
 func _on_finished():
-	print('VICTORY!')
 	hero.stop_moving()
+	_set_paused(true)
 	
 	print('player took: ' + str(steps_taken) + ' steps')
 	
@@ -64,6 +64,8 @@ func _on_finished():
 	var final_score = hud.score * 10 - steps_taken
 	
 	print('final score = ' + str(final_score))
+	
+	hud.show_you_won_message()
 	
 func _on_defeat_enemy():
 	if not hud.take_damage(ENEMY_HEAL_COST):
