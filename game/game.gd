@@ -42,6 +42,7 @@ func _ready():
 
 func _on_start_room_positioned(col):
 	grass_field.set_start_field_position(col)
+	$Ladder.position.x = grid.position.x + (col * 16.0) + 8.0
 
 func _on_room_selected(room_configuration) -> void:
 	grid.set_selected_room_configuration(room_configuration)

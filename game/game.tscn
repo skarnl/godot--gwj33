@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://entities/hero.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/game.gd" type="Script" id=2]
@@ -6,6 +6,11 @@
 [ext_resource path="res://entities/supply.tscn" type="PackedScene" id=4]
 [ext_resource path="res://entities/props/grass_field.gd" type="Script" id=5]
 [ext_resource path="res://gui/hud.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/images/dirt_top.png" type="Texture" id=7]
+[ext_resource path="res://assets/images/dirt_bottom.png" type="Texture" id=8]
+[ext_resource path="res://assets/images/dirt_right.png" type="Texture" id=9]
+[ext_resource path="res://assets/images/dirt_left.png" type="Texture" id=10]
+[ext_resource path="res://assets/images/ladder.png" type="Texture" id=11]
 
 [node name="Game" type="Node2D"]
 pause_mode = 2
@@ -16,15 +21,51 @@ pause_mode = 1
 position = Vector2( 48, 48 )
 script = ExtResource( 3 )
 
-[node name="GrassField" type="Node2D" parent="."]
-position = Vector2( 48, 32 )
-script = ExtResource( 5 )
-
 [node name="Supply" parent="." instance=ExtResource( 4 )]
 position = Vector2( 64, 160 )
 
+[node name="DEBUG_RECT" type="ColorRect" parent="."]
+visible = false
+margin_top = -1.04055
+margin_right = 256.0
+margin_bottom = 253.959
+color = Color( 0.945098, 0.0313726, 0.886275, 0.309804 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dirt" type="Node2D" parent="."]
+position = Vector2( 48, 48 )
+
+[node name="DirtTop" type="Sprite" parent="Dirt"]
+position = Vector2( -7.13524, -0.66214 )
+texture = ExtResource( 7 )
+centered = false
+
+[node name="DirtRight" type="Sprite" parent="Dirt"]
+position = Vector2( 94, 2 )
+texture = ExtResource( 9 )
+centered = false
+
+[node name="DirtLeft" type="Sprite" parent="Dirt"]
+texture = ExtResource( 10 )
+centered = false
+
+[node name="DirtBottom" type="Sprite" parent="Dirt"]
+position = Vector2( -16, 93 )
+texture = ExtResource( 8 )
+centered = false
+
+[node name="Ladder" type="Sprite" parent="."]
+position = Vector2( 112.875, 48.2604 )
+texture = ExtResource( 11 )
+
+[node name="GrassField" type="Node2D" parent="."]
+position = Vector2( 48, 35 )
+script = ExtResource( 5 )
+
 [node name="Hero" parent="." instance=ExtResource( 1 )]
 pause_mode = 1
-position = Vector2( 40, 32 )
+position = Vector2( 40, 38 )
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
