@@ -1,10 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/fonts/Rokkitt-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://gui/hud.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/hud_heart.png" type="Texture" id=3]
 [ext_resource path="res://gui/summary_row.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/fonts/000webfont.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
@@ -43,7 +42,7 @@ hue_variation = 1.0
 hue_variation_random = 1.0
 
 [sub_resource type="DynamicFont" id=6]
-font_data = ExtResource( 5 )
+font_data = ExtResource( 1 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -73,6 +72,8 @@ __meta__ = {
 [node name="Lives" type="Control" parent="Control"]
 anchor_left = 0.5
 anchor_right = 0.5
+margin_top = 5.0
+margin_bottom = 5.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -312,13 +313,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
-margin_left = 4.16222
-margin_top = 239.922
-margin_right = 77.1622
-margin_bottom = 253.922
+[node name="restart" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -36.5
+margin_top = -20.0
+margin_right = 36.5
 custom_fonts/font = SubResource( 6 )
 text = "(r)estart"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

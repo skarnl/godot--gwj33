@@ -24,9 +24,9 @@ script = ExtResource( 2 )
 
 [node name="darkbg" type="ColorRect" parent="."]
 margin_left = 45.0
-margin_top = 48.0
+margin_top = 31.6025
 margin_right = 212.0
-margin_bottom = 154.0
+margin_bottom = 137.603
 mouse_filter = 2
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
@@ -35,7 +35,7 @@ __meta__ = {
 
 [node name="DungeonGrid" type="Node2D" parent="."]
 pause_mode = 1
-position = Vector2( 48, 48 )
+position = Vector2( 48, 31.6025 )
 script = ExtResource( 3 )
 columns = 10
 
@@ -51,7 +51,7 @@ __meta__ = {
 }
 
 [node name="Dirt" type="Node2D" parent="."]
-position = Vector2( 48, 48 )
+position = Vector2( 48, 31.6025 )
 
 [node name="RightRect" type="ColorRect" parent="Dirt"]
 margin_left = 161.682
@@ -107,30 +107,43 @@ texture = ExtResource( 8 )
 centered = false
 
 [node name="Supply" parent="." instance=ExtResource( 4 )]
-position = Vector2( 96, 160 )
+position = Vector2( 96, 143.603 )
 
 [node name="Ladder" type="Sprite" parent="."]
-position = Vector2( 112.875, 48.2604 )
+position = Vector2( 112.875, 31.8629 )
 texture = ExtResource( 11 )
 
 [node name="GrassField" type="Node2D" parent="."]
-position = Vector2( 48, 35 )
+position = Vector2( 48, 18.6025 )
 script = ExtResource( 5 )
 
 [node name="Hero" parent="." instance=ExtResource( 1 )]
 pause_mode = 1
-position = Vector2( 40, 38 )
+position = Vector2( 40, 21.6025 )
 
 [node name="explanation" type="Label" parent="."]
 margin_left = 22.5949
-margin_top = 198.003
+margin_top = 188.333
 margin_right = 235.595
-margin_bottom = 237.003
+margin_bottom = 227.333
 rect_pivot_offset = Vector2( 171.42, -39.1185 )
 custom_fonts/font = SubResource( 1 )
 text = "Help the Hero through the dungeon
 Slay monsters, pick up treasure and
 get to the exit"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="restart" type="Label" parent="."]
+margin_left = 22.5949
+margin_top = 188.333
+margin_right = 235.595
+margin_bottom = 227.333
+rect_pivot_offset = Vector2( 171.42, -39.1185 )
+custom_fonts/font = SubResource( 1 )
+text = "(r)estart"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
