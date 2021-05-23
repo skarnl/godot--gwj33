@@ -1,5 +1,6 @@
 extends Node2D
 
+signal start_room_positioned
 signal selected_used
 signal finished
 signal defeat_enemy
@@ -48,9 +49,14 @@ var directions = {
 
 
 func _ready() -> void:
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
+	yield(get_tree(), "idle_frame")
+	
 	_fill_grid()
-	_add_start_room(1, 1) #make position random?
-	_add_end_room(4, 4) #make position random?
+	_add_start_room(rng.randi_range(0, columns - 1), 0) #make position random?
+	_add_end_room(rng.randi_range(0, columns - 1), rows - 2) #make position random?
 	_add_preview_room()
 
 func _fill_grid() -> void:
@@ -104,10 +110,12 @@ func _add_start_room(col, row):
 	sr.position = Vector2(col * cell_size, row * cell_size)
 	add_child(sr)
 	
+	emit_signal('start_room_positioned', col)
+	
 	start_room = sr
 	
 	var zone = zones[col][row]
-	zone.queue_free()
+	zone.disable()
 	
 	_store_room_reference(col, row, sr)
 	
@@ -122,7 +130,7 @@ func _add_end_room(col, row):
 	end_room = er
 	
 	var zone = zones[col][row]
-	zone.queue_free()
+	zone.disable()
 	
 	_store_room_reference(col, row, er)
 	
@@ -137,7 +145,7 @@ func _add_room(room_config, col, row):
 	r.set_configuration(room_config)
 
 	var zone = zones[col][row]
-	zone.queue_free()
+	zone.disable()
 	
 	_store_room_reference(col, row, r)
 	

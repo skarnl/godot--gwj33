@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://entities/props/grass.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/grass.png" type="Texture" id=2]
+
+[node name="Grass" type="Sprite"]
+texture = ExtResource( 2 )
+centered = false
+hframes = 10
+script = ExtResource( 1 )
