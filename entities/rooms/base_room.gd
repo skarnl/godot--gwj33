@@ -20,25 +20,35 @@ func _ready() -> void:
 
 func _make_random_doors() -> Array:
 	var doors = []
-	var random_float = randf()
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
 	
-	var options = [DoorPositions.TOP, DoorPositions.RIGHT, DoorPositions.BOTTOM, DoorPositions.LEFT]
+	var chance = rng.randi_range(1, 100)
+	
+	var options = [DoorPositions.TOP, DoorPositions.RIGHT, DoorPositions.RIGHT, DoorPositions.BOTTOM, DoorPositions.BOTTOM, DoorPositions.LEFT, DoorPositions.LEFT]
 	options.shuffle()
 	
-	# add all
-	for dir in options:
-		doors.append(dir)
+	# 1 door
+	if chance <= 10:
+		doors.append(options.pop_back())
 	
-	# remove by chance
-	if random_float < 0.9:
-		doors.pop_back()
+	# 2 doors
+	elif chance > 10 and chance <= 45:
+		doors.append(options.pop_front())
+		doors.append(options.pop_back())
 	
-	if random_float < 0.7:
-		doors.pop_back()
-
-	if random_float < 0.3:
-		doors.pop_back()	
+	# 3 doors
+	elif chance > 45 and chance <= 80:
+		doors.append(options.pop_back())
+		doors.append(options.pop_front())
+		doors.append(options.pop_back())
 	
+	# 4 doors
+	else:
+		doors.append(options.pop_back())
+		doors.append(options.pop_front())
+		doors.append(options.pop_back())
+		doors.append(options.pop_front())
 	
 	return doors
 

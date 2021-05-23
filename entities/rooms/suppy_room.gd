@@ -13,27 +13,47 @@ func _ready() -> void:
 	_make_a_room()
 
 
+# EMPTY, ENEMY, HEAL, TREASURE, BIG_TREASURE
+var distr = {
+	1: [10, 30, 30, 15, 15],
+	2: [15, 30, 30, 15, 10],
+	3: [20, 30, 20, 23, 7],
+	4: [20, 30, 20, 25, 5]
+}
+
+
 func _make_a_room():
 	var doors = _make_random_doors()
+	var room_type
 	
-	var room_types = [RoomTypes.EMPTY, RoomTypes.ENEMY, RoomTypes.TREASURE, RoomTypes.BIG_TREASURE]
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
 	
-	if doors.size() == 1:
-		if randf() > 0.8:
-			room_types.append(RoomTypes.BIG_TREASURE)
-			
-		room_types.append(RoomTypes.TREASURE)
+	var chance = rng.randi_range(1, 100)
+	
+	var room_type_distribution = distr[doors.size()]
+	
+	var empty_treshold = room_type_distribution[0]
+	var enemy_treshold = room_type_distribution[1] + empty_treshold
+	var health_treshold = room_type_distribution[2] + enemy_treshold
+	var treasure_treshold = room_type_distribution[3] + health_treshold
+	# var big_treasure_treshold = room_type_distribution[4] + treasure_treshold
+	# big treasure is just the left over
+	
+	if chance <= empty_treshold:
+		room_type = RoomTypes.EMPTY
+	elif chance > empty_treshold and chance <= enemy_treshold:
+		room_type = RoomTypes.ENEMY
+	elif chance > enemy_treshold and chance <= health_treshold:
+		room_type = RoomTypes.HEAL
+	elif chance > health_treshold and chance <= treasure_treshold:
+		room_type = RoomTypes.TREASURE
+	elif chance > treasure_treshold:
+		room_type = RoomTypes.BIG_TREASURE
 		
-	if doors.size() == 2:
-		room_types.append(RoomTypes.TREASURE)
-		room_types.append(RoomTypes.ENEMY)
-		room_types.append(RoomTypes.HEAL)
-		
-	room_types.shuffle()
-	
 	set_configuration({
 		"doors": doors,
-		"type": room_types.pop_front()
+		"type": room_type
 	})
 
 
