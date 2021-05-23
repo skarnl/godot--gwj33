@@ -39,3 +39,7 @@ func _move() -> bool:
 		return true
 	else:
 		return false
+
+# when the player died / was victorious
+func stop_moving():
+	timer.stop()
