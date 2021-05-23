@@ -32,7 +32,7 @@ position = Vector2( 64, 160 )
 
 [node name="Hero" parent="." instance=ExtResource( 1 )]
 position = Vector2( 40, 32 )
-speed = 760.0
+speed = 780.0
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource( 7 )
@@ -40,9 +40,10 @@ script = ExtResource( 7 )
 [node name="Score" type="Label" parent="HUD"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -303.0
-margin_right = -229.0
-margin_bottom = 14.0
+margin_left = -303.446
+margin_top = 0.222977
+margin_right = -229.446
+margin_bottom = 14.223
 rect_scale = Vector2( 4, 4 )
 custom_fonts/font = SubResource( 1 )
 text = "0"
@@ -51,7 +52,43 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Heart" type="Sprite" parent="HUD"]
-position = Vector2( 123.678, 6.68929 )
+[node name="Control" type="Control" parent="HUD"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lives" type="Control" parent="HUD/Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Heart1" type="Sprite" parent="HUD/Control/Lives"]
+position = Vector2( -16, 4 )
+texture = ExtResource( 6 )
+hframes = 2
+
+[node name="Heart2" type="Sprite" parent="HUD/Control/Lives"]
+position = Vector2( -8, 4 )
+texture = ExtResource( 6 )
+hframes = 2
+
+[node name="Heart3" type="Sprite" parent="HUD/Control/Lives"]
+position = Vector2( 0, 4 )
+texture = ExtResource( 6 )
+hframes = 2
+
+[node name="Heart4" type="Sprite" parent="HUD/Control/Lives"]
+position = Vector2( 8, 4 )
+texture = ExtResource( 6 )
+hframes = 2
+
+[node name="Heart5" type="Sprite" parent="HUD/Control/Lives"]
+position = Vector2( 16, 4 )
 texture = ExtResource( 6 )
 hframes = 2

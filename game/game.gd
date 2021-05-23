@@ -8,9 +8,15 @@ onready var hud = $HUD
 
 const STEP_SIZE = 16.0
 
-var score = 0
-var health = 3
+const ENEMY_POINTS = 10
+const TREASURE_POINTS = 3
+const BIG_TREASURE_POINTS = 7
 
+const ENEMY_HEAL_COST = 2
+
+const HEAL_REGAIN = 1
+
+var player_died = false
 
 func _ready():
 	supply.connect('selected', self, '_on_room_selected')
@@ -33,7 +39,8 @@ func _on_room_selected(room_configuration) -> void:
 
 
 func _on_hero_request_instructions() -> void:
-	print('hero requested instruction')
+	if player_died:
+		return
 	
 	var next_destination = grid.get_next_destination(hero.position)
 	
@@ -42,24 +49,22 @@ func _on_hero_request_instructions() -> void:
 	
 	
 func _on_defeat_enemy():
-	hud.add_score(10)
+	if not hud.take_damage(ENEMY_HEAL_COST):
+		print ('player died')
+		player_died = true
+	else:
+		hud.add_score(ENEMY_POINTS)
 	
-	health -= 1
-	temp_update()
 	
 func _on_heal():
-	health += 1
-	temp_update()
+	hud.heal(HEAL_REGAIN)
+	
 	
 func _on_pickup_treasure():
-	hud.add_score(3)
-	temp_update()
+	hud.add_score(TREASURE_POINTS)
+	
 	
 func _on_pickup_big_treasure():
-	hud.add_score(7)
+	hud.add_score(BIG_TREASURE_POINTS)
 	
-	temp_update()
 	
-func temp_update():
-	print('score  = ', score)
-	print('health =', health)
