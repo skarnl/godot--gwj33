@@ -17,8 +17,13 @@ const ENEMY_HEAL_COST = 2
 const HEAL_REGAIN = 1
 
 var player_died = false
+var player_victorious = false
 
+# stats
 var steps_taken = 0
+var enemies_killed = 0
+var coins = 0
+var treasure = 0
 
 func _ready():
 	supply.connect('selected', self, '_on_room_selected')
@@ -57,15 +62,16 @@ func _on_finished():
 	hero.stop_moving()
 	_set_paused(true)
 	
-	print('player took: ' + str(steps_taken) + ' steps')
+	player_victorious = true
 	
-	# calculate score based on score * 10 - steps_taken
+	var enemies_score = enemies_killed * ENEMY_POINTS
+	var coins_score = coins * TREASURE_POINTS
+	var treasure_score = treasure * BIG_TREASURE_POINTS
+	var steps_penalty = steps_taken * STEP_COST
 	
-	var final_score = hud.score * 10 - steps_taken
+	var final_score = enemies_score + coins_score + treasure_score - steps_penalty
 	
-	print('final score = ' + str(final_score))
-	
-	hud.show_you_won_message()
+	hud.show_you_won_message(enemies_killed, enemies_score, coins, coins_score, treasure, treasure_score, steps_taken, steps_penalty, final_score)
 	
 func _on_defeat_enemy():
 	if not hud.take_damage(ENEMY_HEAL_COST):
@@ -78,6 +84,7 @@ func _on_defeat_enemy():
 		
 		print('player took: ' + str(steps_taken) + ' steps before they died')
 	else:
+		enemies_killed += 1
 		hud.add_score(ENEMY_POINTS)
 	
 	
@@ -86,10 +93,12 @@ func _on_heal():
 	
 	
 func _on_pickup_treasure():
+	coins += 1
 	hud.add_score(TREASURE_POINTS)
 	
 	
 func _on_pickup_big_treasure():
+	treasure += 1
 	hud.add_score(BIG_TREASURE_POINTS)
 	
 	
@@ -97,10 +106,14 @@ func _set_paused(pause):
 	get_tree().paused = pause
 
 func _input(event: InputEvent) -> void:
-	if player_died and get_tree().paused and event is InputEventMouseButton and event.is_pressed():
-		_restart()
+	if event is InputEventMouseButton and event.is_pressed():
+		if player_died and get_tree().paused:
+			_restart()
+		elif player_victorious:
+			# continue to next level
+			pass
 		
-	if event is InputEvent and event.is_action_pressed('ui_accept'):
+	if event is InputEvent and event.is_action_pressed('reset'):
 		_restart()
 		
 func _restart():

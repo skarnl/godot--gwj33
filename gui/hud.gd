@@ -12,6 +12,12 @@ onready var score_field = $Score
 
 onready var you_died = $YouDied
 onready var you_won = $YouWon
+onready var enemy_summary = $YouWon/SummaryRow
+onready var coin_summary = $YouWon/SummaryRow2
+onready var treasure_summary = $YouWon/SummaryRow3
+onready var steps_count_text = $YouWon/steps_count
+onready var steps_score_text = $YouWon/steps_score
+onready var final_score_text = $YouWon/final_score
 
 const MAX_LIVES = 5
 
@@ -70,5 +76,19 @@ func show_died_message():
 	you_died.show()
 
 
-func show_you_won_message():
+func show_you_won_message(enemies_killed, enemies_score, coins, coins_score, treasure, treasure_score, steps_taken, steps_score, final_score):
+	enemy_summary.set_count(enemies_killed)
+	enemy_summary.set_score(enemies_score)
+	
+	coin_summary.set_count(coins)
+	coin_summary.set_score(coins_score)
+	
+	treasure_summary.set_count(treasure)
+	treasure_summary.set_score(treasure_score)
+	
+	steps_count_text.text = str(steps_taken) + ' steps'
+	steps_score_text.text = str(steps_score)
+	
+	final_score_text.text = str(final_score)
+	
 	you_won.show()

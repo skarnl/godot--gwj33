@@ -2,7 +2,7 @@
 
 [ext_resource path="res://entities/rooms/base_room.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/grid/room.png" type="Texture" id=2]
-[ext_resource path="res://assets/images/types.png" type="Texture" id=3]
+[ext_resource path="res://entities/type_icon.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -23,11 +23,7 @@ visible = false
 position = Vector2( 8, 8 )
 shape = SubResource( 1 )
 
-[node name="TypeIcon" type="Sprite" parent="."]
-position = Vector2( 8, 8 )
-texture = ExtResource( 3 )
-hframes = 7
-frame = 6
+[node name="TypeIcon" parent="." instance=ExtResource( 3 )]
 
 [node name="Doors" type="Node2D" parent="."]
 script = SubResource( 2 )
