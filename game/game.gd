@@ -8,13 +8,12 @@ onready var hud = $HUD
 
 const STEP_SIZE = 16.0
 
-const ENEMY_POINTS = 10
-const TREASURE_POINTS = 3
-const BIG_TREASURE_POINTS = 7
+const ENEMY_POINTS = 40
+const TREASURE_POINTS = 15
+const BIG_TREASURE_POINTS = 30
 const STEP_COST = 1
 
 const ENEMY_HEAL_COST = 2
-
 const HEAL_REGAIN = 1
 
 var player_died = false
@@ -52,8 +51,6 @@ func _on_hero_request_instructions() -> void:
 	if next_destination:
 		hero.destination = next_destination
 		steps_taken += 1
-		
-		hud.add_score(STEP_COST * -1)
 	
 		
 func _on_finished():
