@@ -74,6 +74,9 @@ func _on_defeat_enemy():
 		player_died = true
 		hero.stop_moving()
 		
+		hud.show_died_message()
+		_set_paused(true)
+		
 		print('player took: ' + str(steps_taken) + ' steps before they died')
 	else:
 		hud.add_score(ENEMY_POINTS)
@@ -91,3 +94,16 @@ func _on_pickup_big_treasure():
 	hud.add_score(BIG_TREASURE_POINTS)
 	
 	
+func _set_paused(pause):
+	get_tree().paused = pause
+
+func _input(event: InputEvent) -> void:
+	if player_died and get_tree().paused and event is InputEventMouseButton and event.is_pressed():
+		_restart()
+		
+	if event is InputEvent and event.is_action_pressed('ui_accept'):
+		_restart()
+		
+func _restart():
+	_set_paused(false)
+	SceneLoader.reload_current_scene()

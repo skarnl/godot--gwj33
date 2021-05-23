@@ -10,6 +10,8 @@ onready var heart5 = $Control/Lives/Heart5
 
 onready var score_field = $Score
 
+onready var you_died = $YouDied
+
 const MAX_LIVES = 5
 
 var score:int = 0
@@ -18,6 +20,9 @@ var lives = 3
 func _ready() -> void:
 	_update_score(0)
 	_update_lives()
+	
+	you_died.hide()
+	
 
 
 func _update_score(_score):
@@ -59,3 +64,6 @@ func _update_lives():
 			self['heart' + str(i)].set_frame(0)
 		else:
 			self['heart' + str(i)].set_frame(1)
+
+func show_died_message():
+	you_died.show()

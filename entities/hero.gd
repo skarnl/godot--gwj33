@@ -2,7 +2,7 @@ extends Node2D
 
 signal ask
 
-export(float, 100, 1000, 10) var speed = 500
+export(float, 700, 1000, 10) var speed = 820
 
 onready var timer = $Timer
 

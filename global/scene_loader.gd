@@ -21,3 +21,9 @@ func _deferred_goto_scene(path):
 	get_tree().get_root().add_child(current_scene)
 
 	emit_signal("level_loaded")
+
+func reload_current_scene():
+	if !current_scene:
+		return
+		
+	goto_scene(current_scene.filename)
