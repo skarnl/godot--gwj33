@@ -12,6 +12,8 @@ var room_configuration = {
 
 var connections = {}
 
+var is_visited = false
+
 func _ready() -> void:
 	randomize()
 	
@@ -73,9 +75,9 @@ func _visualize_type():
 			type_icon.hide()
 	
 
-func hide_visualization():
+func visited():
 	type_icon.hide()
-
+	is_visited = true
 
 func set_configuration(_room_configuration):
 	room_configuration = _room_configuration
@@ -88,11 +90,6 @@ func get_configuration():
 
 
 func has_door_at_position(door_position) -> bool:
-	
-	print('has_door_at_position: ', door_position)
-	print('doors: ', room_configuration.doors)
-	print('has door: ', room_configuration.doors.has(door_position))
-	
 	return room_configuration.doors.has(door_position)
 
 func add_connection(door_position, room) -> void:

@@ -221,20 +221,22 @@ func get_next_destination(current_hero_position: Vector2):
 		print('we zitten IN de dungeon')
 		
 		var current_room = get_room_for_position(current_hero_position_local)	
-		current_room.hide_visualization()
 		
-		match current_room.get_configuration().type:
-			RoomTypes.ENEMY:
-				emit_signal('defeat_enemy')
-			
-			RoomTypes.TREASURE:
-				emit_signal('pickup_treasure')
+		if not current_room.is_visited:
+			match current_room.get_configuration().type:
+				RoomTypes.ENEMY:
+					emit_signal('defeat_enemy')
 				
-			RoomTypes.BIG_TREASURE:
-				emit_signal('pickup_big_treasure')
-				
-			RoomTypes.HEAL:
-				emit_signal('heal')
+				RoomTypes.TREASURE:
+					emit_signal('pickup_treasure')
+					
+				RoomTypes.BIG_TREASURE:
+					emit_signal('pickup_big_treasure')
+					
+				RoomTypes.HEAL:
+					emit_signal('heal')
+		
+		current_room.visited()
 			
 		var connecting_rooms = current_room.connections
 		
