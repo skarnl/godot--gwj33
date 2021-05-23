@@ -1,8 +1,15 @@
 extends Node2D
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	yield(get_tree().create_timer(3.0), "timeout")
+#	if OS.is_debug_build():
+#		Game.transition_to(Game.MAIN_MENU)
+#		pass
+	$RaksoAnimationPlayer.play('intro')
+	
+	yield($RaksoAnimationPlayer, 'animation_finished')
 	
 	Game.transition_to(Game.GameState.MAIN_MENU)
+
+func _input(event):
+	if event is InputEventKey and event.is_action_pressed('ui_accept'):
+		Game.transition_to(Game.GameState.MAIN_MENU)
