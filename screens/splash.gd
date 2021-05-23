@@ -1,9 +1,9 @@
 extends Node2D
 
 func _ready():
-#	if OS.is_debug_build():
-#		Game.transition_to(Game.MAIN_MENU)
-#		pass
+	if OS.is_debug_build():
+		Game.transition_to(Game.GameState.MAIN_MENU)
+		pass
 	$RaksoAnimationPlayer.play('intro')
 	
 	yield($RaksoAnimationPlayer, 'animation_finished')

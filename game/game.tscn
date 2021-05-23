@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://entities/hero.tscn" type="PackedScene" id=1]
 [ext_resource path="res://game/game.gd" type="Script" id=2]
@@ -11,23 +11,39 @@
 [ext_resource path="res://assets/images/dirt_right.png" type="Texture" id=9]
 [ext_resource path="res://assets/images/dirt_left.png" type="Texture" id=10]
 [ext_resource path="res://assets/images/ladder.png" type="Texture" id=11]
+[ext_resource path="res://assets/fonts/Rokkitt-Bold.ttf" type="DynamicFontData" id=12]
+
+[sub_resource type="DynamicFont" id=1]
+size = 14
+extra_spacing_bottom = -6
+font_data = ExtResource( 12 )
 
 [node name="Game" type="Node2D"]
 pause_mode = 2
 script = ExtResource( 2 )
 
+[node name="darkbg" type="ColorRect" parent="."]
+margin_left = 45.0
+margin_top = 48.0
+margin_right = 212.0
+margin_bottom = 154.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DungeonGrid" type="Node2D" parent="."]
 pause_mode = 1
 position = Vector2( 48, 48 )
 script = ExtResource( 3 )
-
-[node name="Supply" parent="." instance=ExtResource( 4 )]
-position = Vector2( 64, 160 )
+columns = 10
 
 [node name="DEBUG_RECT" type="ColorRect" parent="."]
 visible = false
+margin_left = -1.0
 margin_top = -1.04055
-margin_right = 256.0
+margin_right = 255.0
 margin_bottom = 253.959
 color = Color( 0.945098, 0.0313726, 0.886275, 0.309804 )
 __meta__ = {
@@ -37,24 +53,61 @@ __meta__ = {
 [node name="Dirt" type="Node2D" parent="."]
 position = Vector2( 48, 48 )
 
+[node name="RightRect" type="ColorRect" parent="Dirt"]
+margin_left = 161.682
+margin_top = -5.0
+margin_right = 201.682
+margin_bottom = 100.0
+mouse_filter = 2
+color = Color( 0.282353, 0.207843, 0.133333, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightRect2" type="ColorRect" parent="Dirt"]
+margin_left = -42.922
+margin_top = -0.391823
+margin_right = -2.92199
+margin_bottom = 104.608
+mouse_filter = 2
+color = Color( 0.282353, 0.207843, 0.133333, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightRect3" type="ColorRect" parent="Dirt"]
+margin_left = -23.0
+margin_top = 100.364
+margin_right = 166.0
+margin_bottom = 142.364
+mouse_filter = 2
+color = Color( 0.282353, 0.207843, 0.133333, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DirtTop" type="Sprite" parent="Dirt"]
-position = Vector2( -7.13524, -0.66214 )
+position = Vector2( -1.13524, -0.66214 )
 texture = ExtResource( 7 )
 centered = false
 
 [node name="DirtRight" type="Sprite" parent="Dirt"]
-position = Vector2( 94, 2 )
+position = Vector2( 160.574, -0.405396 )
 texture = ExtResource( 9 )
 centered = false
 
 [node name="DirtLeft" type="Sprite" parent="Dirt"]
+position = Vector2( -3.13521, 0 )
 texture = ExtResource( 10 )
 centered = false
 
 [node name="DirtBottom" type="Sprite" parent="Dirt"]
-position = Vector2( -16, 93 )
+position = Vector2( -1.72952, 97.2555 )
 texture = ExtResource( 8 )
 centered = false
+
+[node name="Supply" parent="." instance=ExtResource( 4 )]
+position = Vector2( 96, 160 )
 
 [node name="Ladder" type="Sprite" parent="."]
 position = Vector2( 112.875, 48.2604 )
@@ -67,5 +120,20 @@ script = ExtResource( 5 )
 [node name="Hero" parent="." instance=ExtResource( 1 )]
 pause_mode = 1
 position = Vector2( 40, 38 )
+
+[node name="explanation" type="Label" parent="."]
+margin_left = 22.5949
+margin_top = 198.003
+margin_right = 235.595
+margin_bottom = 237.003
+rect_pivot_offset = Vector2( 171.42, -39.1185 )
+custom_fonts/font = SubResource( 1 )
+text = "Help the Hero through the dungeon
+Slay monsters, pick up treasure and
+get to the exit"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]

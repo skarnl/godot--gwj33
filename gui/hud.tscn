@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/fonts/Rokkitt-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://gui/hud.gd" type="Script" id=2]
 [ext_resource path="res://assets/images/hud_heart.png" type="Texture" id=3]
 [ext_resource path="res://gui/summary_row.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/fonts/000webfont.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
@@ -41,17 +42,19 @@ color = Color( 0.827451, 0.0352941, 0.941176, 1 )
 hue_variation = 1.0
 hue_variation_random = 1.0
 
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 5 )
+
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
 
 [node name="Score" type="Label" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -99.7943
+margin_left = -80.4697
 margin_top = 0.222977
-margin_right = -25.7943
+margin_right = -6.46971
 margin_bottom = 46.223
-rect_scale = Vector2( 1.3, 1.3 )
 custom_fonts/font = SubResource( 2 )
 text = "0"
 align = 2
@@ -151,6 +154,7 @@ __meta__ = {
 }
 
 [node name="YouWon" type="Panel" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.392157 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -304,6 +308,17 @@ margin_bottom = 90.2716
 custom_fonts/font = SubResource( 4 )
 text = "19201911"
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 4.16222
+margin_top = 239.922
+margin_right = 77.1622
+margin_bottom = 253.922
+custom_fonts/font = SubResource( 6 )
+text = "(r)estart"
 __meta__ = {
 "_edit_use_anchors_": false
 }

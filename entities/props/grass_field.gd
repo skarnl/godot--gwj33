@@ -2,7 +2,7 @@ extends Node2D
 
 var GrassInstance = preload('res://entities/props/grass.tscn')
 
-export (int) var columns = 6
+export (int) var columns = 10
 
 func _ready() -> void:
 	for col in columns:
